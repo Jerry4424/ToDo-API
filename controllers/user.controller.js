@@ -3,6 +3,7 @@ const User = require("../models/user.model");
 require("dotenv").config();
 
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
 const saltRounds = 10;
 const myPlaintextPassword = process.env.myPlaintextPassword || "1234567";
 const someOtherPlaintextPassword =
@@ -72,6 +73,10 @@ exports.loginUser = async (req, res) => {
       bcrypt.compare(password, response.password).then(function (result) {
         // result == true
         if (result) {
+          
+          const token = jwt.sign(response._id, process.env.JWT_SECRET);
+
+
           res.status(200).json({
             success: true,
             data: response,
