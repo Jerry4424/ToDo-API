@@ -74,7 +74,7 @@ exports.loginUser = async (req, res) => {
         // result == true
         if (result) {
           
-          const token = jwt.sign(response._id, process.env.JWT_SECRET);
+          const token = jwt.sign(response._id.toString, process.env.JWT_SECRET);
 
 
           res.status(200).json({
